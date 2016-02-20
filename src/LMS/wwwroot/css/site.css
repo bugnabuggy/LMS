@@ -32,3 +32,53 @@ textarea {
         z-index: 10 !important;
     }
 }
+
+.jk-full-area {
+    height: 100%;
+    width: 100%;
+}
+.jk-row {
+    position: relative;
+}
+
+.jk-main-tiles{
+    display: table;
+    vertical-align: middle;
+    text-align: center;
+    min-height: 300px !important;
+    height: 100%;
+}
+
+.jk-y-scroll {
+    
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.jk-padding {
+    padding: 5px;
+}
+
+.jk-justify {
+    text-align: justify;
+}
+
+.jk-v-spacer {
+    display: block;
+    margin-top: 30px;
+}
+
+.jk-font-medium {
+    font-size: 1.2em;
+}
+
+.jk-h-spacer {
+    display: inline-block;
+    width: 2em;
+}
+
+.jk-select-menu {
+    font-size: 2em;
+    min-width: 200px;
+    height: 64px;
+}

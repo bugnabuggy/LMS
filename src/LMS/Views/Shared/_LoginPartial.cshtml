@@ -1,22 +1,52 @@
-﻿@using System.Security.Claims
+﻿@using System.Collections.Generic
+@using System.Threading.Tasks
+@using LMS.ViewModels.Account
+@using Microsoft.AspNet.Http
+@using Microsoft.AspNet.Http.Authentication
+@using Microsoft.AspNet.Identity
+@model LMS.ViewModels.Account.LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@using System.Security.Claims
+@using LMS.Infrastructure
 
 @if (User.IsSignedIn())
 {
-    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @User.GetUserName()!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-            </li>
-        </ul>
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="jk-full-area">
+        <table class="jk-full-area">
+        <tr>
+            <td>
+                <a asp-controller="Manage" asp-action="Index" title="Manage">View profile @User.GetUserName()!</a>
+            </td>
+        </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>    
+                </td>
+            </tr>
+        </table>
     </form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
-    </ul>
+    <form class="form-horizontal" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+
+            <div class="col-xs-10 col-xs-offset-1">
+                <input asp-for="Email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-10 col-xs-offset-1">
+                <input asp-for="Password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 ">
+                <a class="jk-font-medium" href="/Account/Register">Register</a>
+                <span class="jk-h-spacer"></span>
+                <button type="submit" class="btn btn-default">Sign in</button>
+            </div>
+        </div>
+    </form>
 }
