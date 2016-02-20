@@ -1,0 +1,19 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "LMS.Infrastructure",
+    "authors": [ "Sergy" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "frameworks": {
+        "dnxcore50": { }
+    },
+    "dependencies": {
+        "EntityFramework": "7.0.0-beta4",
+        "LMS.Core": "1.0.0-*",
+        "System.ComponentModel.Annotations": "4.0.11-beta-23516",
+        "System.Linq.Queryable": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516"
+    }
+}
