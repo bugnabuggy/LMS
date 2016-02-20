@@ -1,7 +1,11 @@
 ﻿@using System.Collections.Generic
+@using System.Threading.Tasks
+@using LMS.Models
+@using LMS.ViewModels.Account
 @using Microsoft.AspNet.Http
 @using Microsoft.AspNet.Http.Authentication
-@model LoginViewModel
+@using Microsoft.AspNet.Identity
+@model LMS.ViewModels.Account.LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
