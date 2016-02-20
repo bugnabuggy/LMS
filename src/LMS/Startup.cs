@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Infrastructure;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,8 +11,8 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LMS.Models;
 using LMS.Services;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace LMS
 {
@@ -38,8 +40,10 @@ namespace LMS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddEntityFramework().AddSqlite().AddDbContext<ApplicationDbContext>();
+            var path = PlatformServices.Default.Application.ApplicationBasePath;
+            services.AddEntityFramework()
+                .AddSqlite()
+                .AddDbContext<ModelContext>(opt => opt.UseSqlite("Filename=" + Path.Combine(path, "site.db")));
             // Add framework services.
             //services.AddEntityFramework()
             //    .AddSqlServer()
@@ -47,7 +51,7 @@ namespace LMS
             //        options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<ModelContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
@@ -84,7 +88,7 @@ namespace LMS
                     using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                         .CreateScope())
                     {
-                        serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
+                        serviceScope.ServiceProvider.GetService<ModelContext>()
                              .Database.Migrate();
                     }
                 }
