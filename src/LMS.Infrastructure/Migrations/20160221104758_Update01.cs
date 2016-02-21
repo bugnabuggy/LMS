@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using LMS.Core.Models;
 using Microsoft.Data.Entity.Migrations;
 
 namespace LMS.Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class Update01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -123,7 +122,8 @@ namespace LMS.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     AreaId = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    StateId = table.Column<int>(nullable: false, defaultValue: GoalStateType.InProgress),
+                    Priority = table.Column<int>(nullable: false),
+                    StateId = table.Column<int>(nullable: false),
                     Timestamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -210,7 +210,7 @@ namespace LMS.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     GoalId = table.Column<string>(nullable: true),
-                    TimeSpendMin = table.Column<int>(nullable: false),
+                    TimeSpentMin = table.Column<int>(nullable: false),
                     Timestamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

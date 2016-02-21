@@ -23,7 +23,7 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<string>("GoalId")
                         .HasAnnotation("MaxLength", 32);
 
-                    b.Property<int>("TimeSpendMin");
+                    b.Property<int>("TimeSpentMin");
 
                     b.Property<DateTime>("Timestamp");
 
@@ -42,6 +42,8 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 100);
+
+                    b.Property<int>("Priority");
 
                     b.Property<int>("StateId");
 

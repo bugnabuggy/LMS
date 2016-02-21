@@ -11,7 +11,6 @@ namespace LMS.Tests
 {
     public class UserAreaServiceTest : AUnitTest
     {
-
         [Fact]
         public void AddUserArea()
         {

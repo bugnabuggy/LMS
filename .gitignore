@@ -212,3 +212,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 src/LMS/wwwroot/lib/*
+src/LMS/site.db
