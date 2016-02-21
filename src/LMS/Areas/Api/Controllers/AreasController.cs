@@ -10,7 +10,6 @@ using Microsoft.AspNet.Mvc.Filters;
 
 namespace LMS.Areas.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class AreasController : AController
     {
