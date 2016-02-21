@@ -37,8 +37,13 @@ textarea {
     height: 100%;
     width: 100%;
 }
-.jk-row {
-    position: relative;
+
+.jk-inline-block {
+    display: inline-block;    
+}
+
+.jk-right {
+    float: right;
 }
 
 .jk-main-tiles{
@@ -83,4 +88,15 @@ textarea {
     height: 64px;
     text-transform: uppercase;
     float: right;
+}
+
+.jk-a-label {
+    font-size: 1.5em;
+    color: white;
+}
+
+.jk-a-edit {
+    color: black !important;
+    background-color: white !important;
+    opacity: 0.8 !important;
 }
