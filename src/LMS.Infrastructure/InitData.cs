@@ -10,10 +10,14 @@ namespace LMS.Infrastructure
     public class InitData
     {
         private IRepository<GoalState> _goalStateRepository;
-         
-        public InitData(IRepository<GoalState> goalStateRepository)
+
+        private IUnitOfWorkFactory _unitOfWorkFactory;
+
+        public InitData(IRepository<GoalState> goalStateRepository,
+            IUnitOfWorkFactory unitOfWorkFactory)
         {
             _goalStateRepository = goalStateRepository;
+            _unitOfWorkFactory = unitOfWorkFactory;
             InitializeDatabase();
         }
 
@@ -24,7 +28,19 @@ namespace LMS.Infrastructure
 
         private void UpdateGoalStates()
         {
-            throw new NotImplementedException();
+            var states = _goalStateRepository.Items.ToList();
+            var stateList = GoalStates();
+            var newStates = stateList
+                .Where(s => states.All(st => st.Id != s.Id))
+                .ToList();
+            if (newStates.Count > 0)
+            {
+                using (var uof = _unitOfWorkFactory.Create())
+                {
+                    newStates.ForEach(s => _goalStateRepository.Add(s));
+                    uof.SaveChanges();
+                }
+            }
         }
 
         private List<GoalState> GoalStates()

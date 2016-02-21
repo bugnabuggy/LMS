@@ -74,6 +74,11 @@ namespace LMS
             services.AddScoped<ITimeConverter, TimeConverter>();
             services.AddScoped<IAppContext, Services.AppContext>();
             services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+            services.AddTransient<InitData, InitData>();
+
+            //Seed database
+            services.BuildServiceProvider().GetService<InitData>().InitializeDatabase();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
