@@ -67,9 +67,11 @@ namespace LMS
             services.AddScoped<IRepository<Goal>, Repository<Goal>>();
             services.AddScoped<IRepository<GoalState>, Repository<GoalState>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<CalendarTask>, Repository<CalendarTask>>();
 
             services.AddScoped<IUserAreaService, UserAreaService>();
             services.AddScoped<IGoalService, GoalService>();
+            services.AddScoped<ICalendarTaskService, CalendarTaskService>();
 
             services.AddScoped<ITimeConverter, TimeConverter>();
             services.AddScoped<IAppContext, Services.AppContext>();

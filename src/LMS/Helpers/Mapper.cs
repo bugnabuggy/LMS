@@ -68,5 +68,23 @@ namespace LMS.Services
             item.Priority = model.Priority;
             item.Title = model.Title;
         }
+
+        public static CalendarTaskVM Map(CalendarTask item, ITimeConverter timeConverter)
+        {
+            return new CalendarTaskVM
+            {
+                Id = item.Id,
+                Timestamp = timeConverter.ToLocal(item.Timestamp),
+                TimeSpentMin = item.TimeSpentMin
+            };
+        }
+
+        public static CalendarTask Map(CalendarTaskVM model)
+        {
+            return new CalendarTask
+            {
+                TimeSpentMin = model.TimeSpentMin
+            };
+        }
     }
 }
