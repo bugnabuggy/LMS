@@ -2,13 +2,13 @@
     var ctrl = function(areasSrv,scope) {
         var ctrl = this;
 
+        areasSrv.list();
         ctrl.areas = areasSrv.areas;
 
-        ctrl.refresh = function() {
+        ctrl.refresh = function () {
             areasSrv.list();
+            ctrl.areas = areasSrv.areas;
         };
-
-        ctrl.refresh();
 
         ctrl.addArea = function() {
             var newArea = {
@@ -17,13 +17,13 @@
             }
             newArea.Color = ctrl.generateColor();
             areasSrv.add(newArea);
-
+            ctrl.areas = areasSrv.areas;
             //areasSrv.areas.push(newArea);
         }
 
         ctrl.editArea = function(area) {
             if (!area.editVisible) {
-                area.labelVisible = false;
+                area.labelVisible = true;
                 area.editVisible = true;
             } else {
                 areasSrv.edit(area);
@@ -54,9 +54,14 @@
             for (var i = 0; i < 6; i++) {
                 color += letters[Math.floor(Math.random() * 16)];
             }
+
             return color;
         }
-
+        
+        window.setTimeout(function (scope) {
+            ctrl.areas = areasSrv.areas;
+            scope.$apply();
+        }, 1000, scope);
     }
 
     module.controller('areasCtrl',['areasSrv','$scope', ctrl]);

@@ -45,7 +45,7 @@
 
     it('should work!', function () {
         assert.isOk(endpoints);
-        assert.equal(endpoints.areas.list,"/api/areas/list/");
+        assert.equal(endpoints.areas.list, "/api/areas/");
     });
 
     it('should have areas controller and servcie', function () {

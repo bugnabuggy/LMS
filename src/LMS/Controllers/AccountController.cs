@@ -130,7 +130,7 @@ namespace LMS.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     //return RedirectToAction(nameof(HomeController.Index), "Home");
-                    return RedirectToAction(nameof(AreasController.Index), "Index");
+                    return RedirectToAction(nameof(AreasController.Index), "Areas");
                 }
                 AddErrors(result);
             }

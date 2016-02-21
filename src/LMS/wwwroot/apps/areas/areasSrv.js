@@ -1,11 +1,12 @@
 ﻿(function(app) {
-    var srv = function($http) {
+    var srv = function($http,scope) {
         var srv = this;
         srv.areas = new Array();
+        
 
         // get Areas
         var success = function (response) {
-            srv.areas  = response.data;
+            srv.areas = response.data;
         }
         var fail = function (response) {
             if (!testEnviroment)
@@ -14,6 +15,8 @@
 
         srv.list = function () {
             $http.get(endpoints.areas.list).then(success, fail);
+            return srv.areas;
+            
         }
 
         // add Area
@@ -43,7 +46,7 @@
         }
 
         srv.edit = function (area) {
-            $http.put(endpoints.areas.edit, area).then(goodPut, badPut);
+            $http.put(endpoints.areas.edit+area.Id, area).then(goodPut, badPut);
         }
 
         // del Area
@@ -60,11 +63,12 @@
         }
 
         srv.del = function (area) {
-            $http.delete(endpoints.areas.del, area).then(goodDel, badDel);
+            $http.delete(endpoints.areas.del+area.Id, area).then(goodDel, badDel);
         }
 
+        srv.list();
     }
 
-    app.service('areasSrv',['$http',srv]);
+    app.service('areasSrv',['$http','$rootScope',srv]);
 
 })(angular.module('areasApp'))

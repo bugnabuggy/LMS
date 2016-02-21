@@ -50,7 +50,7 @@ textarea {
     display: table;
     vertical-align: middle;
     text-align: center;
-    min-height: 300px !important;
+    height: 300px !important;
     height: 100%;
 }
 
