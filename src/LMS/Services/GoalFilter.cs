@@ -24,7 +24,8 @@ namespace LMS.Services
                         Goal = goal,
                         LastUpdate = (DateTime?)goal.Tasks.Select(t => t.Timestamp).OrderByDescending(t => t).FirstOrDefault()
                     })
-                    .Where(g => g.LastUpdate != null)
+                    .ToList()
+                    //.Where(g => g.LastUpdate != null)
                     .GroupBy(g => g.Goal.AreaId)
                     .Select(group => new
                     {

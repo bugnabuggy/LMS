@@ -8,7 +8,7 @@ using LMS.Infrastructure;
 namespace LMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20160221104758_Update01")]
+    [Migration("20160221134218_Update01")]
     partial class Update01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace LMS.Infrastructure.Migrations
             modelBuilder.Entity("LMS.Core.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasAnnotation("MaxLength", 32);
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<DateTime>("Timestamp");
 
@@ -131,7 +131,8 @@ namespace LMS.Infrastructure.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);

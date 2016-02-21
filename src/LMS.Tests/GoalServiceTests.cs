@@ -43,8 +43,8 @@ namespace LMS.Tests
             {
                 new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.InProgress, Description = "Goal 1", Priority = 2},
                 new Goal {AreaId = area1.Id, Area = area1,  StateId = GoalStateType.InProgress, State = incompleteState, Description = "Goal 2", Priority = 1},
-                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Complete, Description = "Goal 3", Priority = 3},
-                new Goal {AreaId = area2.Id, Area = area1, StateId = GoalStateType.Complete, Description = "Goal 4", Priority = 1},
+                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Completed, Description = "Goal 3", Priority = 3},
+                new Goal {AreaId = area2.Id, Area = area1, StateId = GoalStateType.Completed, Description = "Goal 4", Priority = 1},
             };
 
             var service = CreateGoalService();
@@ -107,7 +107,7 @@ namespace LMS.Tests
             {
                 new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.InProgress},
                 new Goal {AreaId = area1.Id, Area = area1,  StateId = GoalStateType.InProgress},
-                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Complete},
+                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Completed},
             };
 
             var service = CreateGoalService();
@@ -143,7 +143,7 @@ namespace LMS.Tests
                     Priority = 1,
                     Tasks = new List<CalendarTask> { new CalendarTask {Timestamp = new DateTime(2016, 02, 21)} }
                 },
-                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Complete},
+                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.Completed},
                 new Goal
                 {
                     AreaId = area1.Id,

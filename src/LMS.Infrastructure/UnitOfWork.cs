@@ -12,7 +12,7 @@ namespace LMS.Infrastructure
     {
         private DbContext _context;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(ModelContext context)
         {
             _context = context;
         }

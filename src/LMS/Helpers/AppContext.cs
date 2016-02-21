@@ -10,5 +10,11 @@ namespace LMS.Services
         public string UserId { get; set; }
 
         public string TimeZoneId { get; set; }
+
+        public AppContext()
+        {
+            UserId = "test";
+            TimeZoneId = "Bangladesh Standard Time";
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace LMS.Core.Models
     public enum GoalStateType
     {
         InProgress = 1,
-        Complete = 2
+        Completed = 2
     }
 }
