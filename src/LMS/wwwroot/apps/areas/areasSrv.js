@@ -3,6 +3,7 @@
         var srv = this;
         srv.areas = new Array();
 
+        // get Areas
         var success = function (response) {
             srv.areas  = response.data;
         }
