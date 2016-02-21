@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LMS.Core;
+using LMS.Core.Models;
 using LMS.Infrastructure;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
@@ -23,18 +25,24 @@ namespace LMS.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private IRepository<User> _userRepository;
+        private IUnitOfWorkFactory _unitOfWorkFactory;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IRepository<User> userRepository,
+            IUnitOfWorkFactory unitOfWorkFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _userRepository = userRepository;
+            _unitOfWorkFactory = unitOfWorkFactory;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -104,7 +112,12 @@ namespace LMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                using (var uof = _unitOfWorkFactory.Create())
+                {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    _userRepository.Add(user.User);
+                    uof.SaveChanges();
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -120,6 +133,7 @@ namespace LMS.Controllers
                     return RedirectToAction(nameof(AreasController.Index), "Index");
                 }
                 AddErrors(result);
+            }
             }
 
             // If we got this far, something failed, redisplay form

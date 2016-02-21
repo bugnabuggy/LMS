@@ -13,7 +13,7 @@ namespace LMS.Infrastructure
 
         private readonly DbSet<TModel> _dbSet;
 
-        public Repository(DbContext context)
+        public Repository(ModelContext context)
         {
             _context = context;
             _dbSet = _context.Set<TModel>();

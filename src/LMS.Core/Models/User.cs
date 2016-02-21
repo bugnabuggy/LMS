@@ -11,7 +11,7 @@ namespace LMS.Core.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [StringLength(ModelConstrains.IdLength)]
+        [StringLength(256)]
         public string Id { get; set; }
 
         public DateTime Timestamp { get; set; }

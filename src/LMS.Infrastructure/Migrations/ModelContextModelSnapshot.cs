@@ -66,7 +66,7 @@ namespace LMS.Infrastructure.Migrations
             modelBuilder.Entity("LMS.Core.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasAnnotation("MaxLength", 32);
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<DateTime>("Timestamp");
 
@@ -130,7 +130,8 @@ namespace LMS.Infrastructure.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);

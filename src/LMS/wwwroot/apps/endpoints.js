@@ -1,6 +1,6 @@
 ﻿endpoints = {
     areas: {
-        page:"/Areas/", 
+        page:"/Areas/",
         list:"/api/areas/", // GET
         add:"/api/areas/", // POST
         edit:"/api/areas/", // PUT

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Core;
+using LMS.Core.Models;
 using LMS.Infrastructure;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -59,6 +61,19 @@ namespace LMS
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            //Repos
+            services.AddScoped<IRepository<UserArea>, Repository<UserArea>>();
+            services.AddScoped<IRepository<Goal>, Repository<Goal>>();
+            services.AddScoped<IRepository<GoalState>, Repository<GoalState>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+
+            services.AddScoped<IUserAreaService, UserAreaService>();
+            services.AddScoped<IGoalService, GoalService>();
+
+            services.AddScoped<ITimeConverter, TimeConverter>();
+            services.AddScoped<IAppContext, Services.AppContext>();
+            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
