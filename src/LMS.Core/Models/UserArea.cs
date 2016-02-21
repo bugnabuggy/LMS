@@ -31,10 +31,13 @@ namespace LMS.Core.Models
 
         public int Priority { get; set; }
 
+        public List<Goal> Goals { get; set; }
+
         public UserArea()
         {
             Id = IdFactory.GenerateId();
             Timestamp = DateTime.UtcNow;
+            Goals = new List<Goal>();
         }
     }
 }

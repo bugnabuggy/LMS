@@ -12,8 +12,6 @@ namespace LMS.Infrastructure
     {
         private DbContext _context;
 
-        private DbTransaction _transaction;
-
         public UnitOfWork(DbContext context)
         {
             _context = context;

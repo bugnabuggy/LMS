@@ -15,5 +15,11 @@ namespace LMS.Core.Models
         public string Id { get; set; }
 
         public DateTime Timestamp { get; set; }
+
+        public User()
+        {
+            Id = IdFactory.GenerateId();
+            Timestamp = DateTime.UtcNow;
+        }
     }
 }

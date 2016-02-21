@@ -7,8 +7,8 @@ namespace LMS.Services
     {
         List<GoalVM> List(GoalListOptions options);
         GoalVM Get(string goalId);
-        void Add(GoalVM goal);
-        void Update(GoalVM goal);
+        GoalVM Add(GoalVM goal, string areaId);
+        GoalVM Update(GoalVM goal);
         void Delete(string goalId);
     }
 }

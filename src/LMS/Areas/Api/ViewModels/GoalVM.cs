@@ -11,19 +11,13 @@ namespace LMS.Areas.Api.ViewModels
     {
         public string Id { get; set; }
 
-        public DateTime Timestamp { get; set; }
-
-        public string AreaId { get; set; }
-
-        public UserArea Area { get; set; }
-
         [Required]
         [MaxLength(100)]
         public string Description { get; set; }
 
         public GoalStateType StateId { get; set; }
 
-        public string State { get; set; }
+        public int Priority { get; set; }
 
         public GoalVM()
         {

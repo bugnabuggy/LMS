@@ -32,10 +32,13 @@ namespace LMS.Core.Models
 
         public List<CalendarTask> Tasks { get; set; }
 
+        public int Priority { get; set; }
+
         public Goal()
         {
             Id = IdFactory.GenerateId();
             Timestamp = DateTime.UtcNow;
+            Tasks = new List<CalendarTask>();
         }
     }
 }

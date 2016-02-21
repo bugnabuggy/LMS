@@ -21,6 +21,12 @@ namespace LMS.Core.Models
 
         public Goal Goal { get; set; }
 
-        public int TimeSpendMin { get; set; }
+        public int TimeSpentMin { get; set; }
+
+        public CalendarTask()
+        {
+            Id = IdFactory.GenerateId();
+            Timestamp = DateTime.UtcNow;
+        }
     }
 }

@@ -8,8 +8,8 @@ using LMS.Infrastructure;
 namespace LMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20160220141320_Init")]
-    partial class Init
+    [Migration("20160221104758_Update01")]
+    partial class Update01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<string>("GoalId")
                         .HasAnnotation("MaxLength", 32);
 
-                    b.Property<int>("TimeSpendMin");
+                    b.Property<int>("TimeSpentMin");
 
                     b.Property<DateTime>("Timestamp");
 
@@ -43,6 +43,8 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 100);
+
+                    b.Property<int>("Priority");
 
                     b.Property<int>("StateId");
 
