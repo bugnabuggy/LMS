@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Core.Models;
 
-namespace LMS.Core.Models
+namespace LMS.Areas.Api.ViewModels
 {
-    public class Goal
+    public class GoalVM
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [StringLength(ModelConstrains.IdLength)]
         public string Id { get; set; }
 
         public DateTime Timestamp { get; set; }
 
-        [Required]
-        [StringLength(ModelConstrains.IdLength)]
         public string AreaId { get; set; }
 
         public UserArea Area { get; set; }
@@ -28,14 +23,10 @@ namespace LMS.Core.Models
 
         public GoalStateType StateId { get; set; }
 
-        public GoalState State { get; set; }
+        public string State { get; set; }
 
-        public List<CalendarTask> Tasks { get; set; }
-
-        public Goal()
+        public GoalVM()
         {
-            Id = IdFactory.GenerateId();
-            Timestamp = DateTime.UtcNow;
         }
     }
 }

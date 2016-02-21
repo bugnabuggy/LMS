@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LMS.Core.Models;
 using Microsoft.Data.Entity.Migrations;
 
 namespace LMS.Infrastructure.Migrations
@@ -122,7 +123,7 @@ namespace LMS.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     AreaId = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    StateId = table.Column<int>(nullable: false),
+                    StateId = table.Column<int>(nullable: false, defaultValue: GoalStateType.InProgress),
                     Timestamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
