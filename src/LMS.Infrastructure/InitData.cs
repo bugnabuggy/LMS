@@ -23,7 +23,14 @@ namespace LMS.Infrastructure
 
         public void InitializeDatabase()
         {
-            UpdateGoalStates();
+            try
+            {
+                UpdateGoalStates();
+            }
+            catch
+            {
+                //Do nothing
+            }
         }
 
         private void UpdateGoalStates()
