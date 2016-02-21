@@ -23,15 +23,15 @@ namespace LMS.Areas.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserAreaVM> Get()
+        public IEnumerable<UserAreaVM> Get(bool includeGoals = true, bool onlyLastGoals = true)
         {
-            return _userAreaService.List(new AreaListOptions { IncludeGoals = true, OnlyLastGoals = true });
+            return _userAreaService.List(new AreaListOptions { IncludeGoals = includeGoals, OnlyLastGoals = onlyLastGoals });
         }
 
         [HttpGet("{id}")]
-        public UserAreaVM Get(string id)
+        public UserAreaVM Get(string id, bool includeGoals = true, bool onlyLastGoals = true)
         {
-            return _userAreaService.Get(id, new AreaListOptions { IncludeGoals = true, OnlyLastGoals = true });
+            return _userAreaService.Get(id, new AreaListOptions { IncludeGoals = includeGoals, OnlyLastGoals = onlyLastGoals });
         }
 
         [HttpPost]
