@@ -1,10 +1,10 @@
 ﻿endpoints = {
     areas: {
         page:"/Areas/",
-        list: "/api/areas/list/",
-        add:"/api/areas/add/",
-        edit:"/api/areas/edit/",
-        del:"/api/areas/del/"
+        list: "/api/areas/",
+        add:"/api/areas/",
+        edit:"/api/areas/",
+        del:"/api/areas/"
     },
     goals: {
         page:"/Planning",
