@@ -2,35 +2,55 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Areas";
+}
+
+@section head{
+    <script src="~/lib/angular/angular.js"></script>
 }
 
 @section scripts
 {
-    <script src="~/lib/angular/angular.js"></script>
+
     <script src="~/lib/angular-animate/angular-animate.js"></script>
-    <script src="~/apps/commonapp.js"></script>
+    <script src="~/lib/underscore/underscore-min.js"></script>
+
+    <script src="~/apps/endpoints.js"></script>
+
+    <script src="~/apps/commonApp.js"></script>
     <script src="~/apps/areasApp.js"></script>
+    <script src="~/apps/areas/areasSrv.js"></script>
+    <script src="~/apps/areas/areasCtrl.js"></script>
 }
 
 <div class="jk-v-spacer"></div>
 
-<article ng-app="areasApp">
-    <div class="well">
-        <h4>What areas of your life you want to improve?</h4></div>
-    <div>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Panel heading without title</div>
-                    <div class="panel-body">
-                        Panel content
+<article ng-app="areasApp" ng-cloak ng-controller="areasCtrl as ars">
+    <div class="well row">
+        <h4 class="jk-inline-block">Which areas of your life you want to improve?</h4>
+        <button class="btn btn-default jk-right" ng-click="ars.refresh()"><i class="fa fa-refresh"></i></button>
+    </div>
+    <div class="list-group-item row">
+        <div class="col-xs-12" ng-repeat="item in ars.areas">
+            <div class="panel panel-default ">
+                <div class="panel-body " style="opacity:0.5;background-color:{{item.Color}}; ">
+                    <div class="col-xs-10">
+                        <input ng-keypress="ars.key(item,$event)" ng-hide="!item.editVisible" type="text" maxlength="50" class="form-control col-xs-12 jk-a-edit" ng-model="item.Title" value=""/>
+                        <label class="jk-a-label" ng-hide="!item.labelVisible">{{item.Title}}</label>
                     </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-default" ng-click="ars.editArea(item)"><i class="fa fa-pencil"></i></button>
+                        <span class="jk-h-spacer"></span>
+                        <button class="btn btn-default" ng-click="ars.delArea(item)"><i class="fa fa-trash"></i></button>
+                    </div>
+                    
                 </div>
-            </li>
-            <li class="list-group-item">
-                <button class="btn btn-default"><i class="fa fa-2x fa-plus"></i></button>
-            </li>
-        </ul>
+            </div>
+        </div>
+    </div>
+    <div class="list-group-item row">
+        <button class="btn btn-default" ng-click="ars.addArea()"><i class="fa fa-2x fa-plus"></i></button>
+        <button class="btn btn-success jk-right" onclick="window.location=endpoints.goals.page">Define Goals</button>
     </div>
 </article>
 

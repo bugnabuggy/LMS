@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
-    <title>Mocha</title>
+    <title>Mocha Tests</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mocha.css" />
@@ -14,11 +14,22 @@
     <script src="../lib/angular/angular.js"></script>
     <script src="../lib/angular-animate/angular-animate.js"></script>
     <script src="../lib/chai/chai.js"></script>
+    <script src="../lib/underscore/underscore.js"></script>
 
-    <script>
-        assert = chai.assert;
-        mocha.setup('bdd');
-    </script>
+
+<!-- source files -->
+    <script src="../apps/endpoints.js"></script>
+    <script src="../apps/commonApp.js"></script>
+    <script src="../apps/areasApp.js"></script>
+
+
+    <script src="../apps/areas/areasSrv.js"></script>
+    <script src="../apps/areas/areasCtrl.js"></script>
+
+<script>
+    assert = chai.assert;
+    mocha.setup('bdd');
+</script>
 
     <script src="../lib/angular-mocks/angular-mocks.js"></script>
 
@@ -28,10 +39,9 @@
 
 
 <script>
-        
-
-        mocha.run();
-    </script>
+    testEnviroment = true;
+    mocha.run();
+</script>
 </body>
 
 </html>
