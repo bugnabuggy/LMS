@@ -8,17 +8,19 @@
     <title>@ViewData["Title"] - LMS Planning</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.css"/>
         <link rel="stylesheet" href="~/css/bootstrap.css" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
+        @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
-        <link rel="stylesheet" href="~/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap.css"/>
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
     </environment>
 </head>
 <body>
@@ -39,7 +41,7 @@
                         <select class="jk-select-menu" id="selMenu" onchange="window.location = this.value">
                             <option value="/DashBoard">Dashboard</option>
                             <option value="/Planning">Planing</option>
-                            <option value="/SetUp">Areas</option>
+                            <option value="/Areas">Areas</option>
                             <option value="/Manage">Profile</option>
                             <option value="/">Logout page</option>
                         </select>

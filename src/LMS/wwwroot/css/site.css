@@ -81,4 +81,6 @@ textarea {
     font-size: 2em;
     min-width: 200px;
     height: 64px;
+    text-transform: uppercase;
+    float: right;
 }

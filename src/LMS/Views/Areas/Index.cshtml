@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@section scripts
+{
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/lib/angular-animate/angular-animate.js"></script>
+    <script src="~/apps/commonapp.js"></script>
+    <script src="~/apps/areasApp.js"></script>
+}
+
+<div class="jk-v-spacer"></div>
+
+<article ng-app="areasApp">
+    <div class="well">
+        <h4>What areas of your life you want to improve?</h4></div>
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Panel heading without title</div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <button class="btn btn-default"><i class="fa fa-2x fa-plus"></i></button>
+            </li>
+        </ul>
+    </div>
+</article>
+
