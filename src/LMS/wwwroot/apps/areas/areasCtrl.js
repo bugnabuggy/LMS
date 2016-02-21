@@ -16,9 +16,9 @@
                 Title:""
             }
             newArea.Color = ctrl.generateColor();
-            //areasSrv.add(newArea);
+            areasSrv.add(newArea);
 
-            areasSrv.areas.push(newArea);
+            //areasSrv.areas.push(newArea);
         }
 
         ctrl.editArea = function(area) {
@@ -26,7 +26,7 @@
                 area.labelVisible = false;
                 area.editVisible = true;
             } else {
-                //areasSrv.edit(area);
+                areasSrv.edit(area);
 
                 area.editVisible = false;
                 window.setTimeout(function (scope) {

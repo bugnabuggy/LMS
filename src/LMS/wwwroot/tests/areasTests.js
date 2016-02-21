@@ -72,8 +72,9 @@
     });
 
     it('should add area, post to server, and then push to array', function () {
+        var requestHandlerList = $httpBackend.when('GET', endpoints.areas.list).respond(404,null);
         var requestHandler = $httpBackend.when('POST', endpoints.areas.add).respond(AddAnswer);
-
+        
         var count = arCtrl.areas.length;
         arCtrl.addArea();
 
@@ -86,7 +87,7 @@
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should toggle edit sate for area and edit it when toggle back', function () {
+    it('should toggle edit sate for area and edit it when toggle back', function (done) {
         var area = {
             Id: '12',
             Timestamp: '',
@@ -103,9 +104,10 @@
         assert.isFalse(area.labelVisible);
 
         area.Title = "Edited";
-
+        
+        var requestHandlerList = $httpBackend.when('GET', endpoints.areas.list).respond(404, null);
         var requestHandler = $httpBackend.when('PUT', endpoints.areas.edit).respond(AddAnswer);
-
+        
         arCtrl.editArea(area);
         $httpBackend.flush();
 
@@ -116,17 +118,21 @@
         $httpBackend.verifyNoOutstandingRequest();
 
         assert.isFalse(area.editVisible);
-        assert.isTrue(area.labelVisible);
+        window.setTimeout(function(done) {
+            assert.isTrue(area.labelVisible);
+            done();
+        }, 200, done);
+        
     });
 
     it('should delete area', function() {
         var area = AddAnswer;
         arSrv.areas.push(area);
 
+        var requestHandlerList = $httpBackend.when('GET', endpoints.areas.list).respond(404, null);
         var requestHandler = $httpBackend.when('DELETE', endpoints.areas.del).respond(AddAnswer);
 
         arCtrl.delArea(area);
-
         $httpBackend.flush();
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();

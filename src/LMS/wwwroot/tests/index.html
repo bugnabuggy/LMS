@@ -19,17 +19,17 @@
 
 <!-- source files -->
     <script src="../apps/endpoints.js"></script>
-    <script src="../apps/commonapp.js"></script>
-    <script src="../apps/areasapp.js"></script>
+    <script src="../apps/commonApp.js"></script>
+    <script src="../apps/areasApp.js"></script>
 
 
-    <script src="../apps/areas/areassrv.js"></script>
-    <script src="../apps/areas/areasctrl.js"></script>
+    <script src="../apps/areas/areasSrv.js"></script>
+    <script src="../apps/areas/areasCtrl.js"></script>
 
 <script>
-        assert = chai.assert;
-        mocha.setup('bdd');
-    </script>
+    assert = chai.assert;
+    mocha.setup('bdd');
+</script>
 
     <script src="../lib/angular-mocks/angular-mocks.js"></script>
 
@@ -39,6 +39,7 @@
 
 
 <script>
+    testEnviroment = true;
     mocha.run();
 </script>
 </body>

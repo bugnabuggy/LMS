@@ -7,7 +7,8 @@
             srv.areas  = response.data;
         }
         var fail = function (response) {
-            alert(response.statusText);
+            if (!testEnviroment)
+                alert("Status code: " + response.status + "  " + response.statusText);
         }
 
         srv.list = function () {
@@ -20,6 +21,7 @@
         }
 
         var badPost = function (response) {
+            if (!testEnviroment)
             alert("Can`t add Area: " + response.statusText);
         }
 
@@ -35,6 +37,7 @@
         }
 
         var badPut = function (response) {
+            if (!testEnviroment)
             alert("Cant update Area: " + response.statusText);
         }
 
@@ -51,6 +54,7 @@
         }
 
         var badDel = function (response) {
+            if (!testEnviroment)
             alert("Cant delete Area: " + response.statusText);
         }
 
