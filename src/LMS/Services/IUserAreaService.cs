@@ -5,10 +5,10 @@ namespace LMS.Services
 {
     public interface IUserAreaService
     {
-        List<UserAreaVM> List(GoalListOptions options);
-        UserAreaVM Get(GoalListOptions options);
-        void Add(UserAreaVM userArea);
-        void Update(UserAreaVM userArea);
+        List<UserAreaVM> List(AreaListOptions options);
+        UserAreaVM Get(string areaId, AreaListOptions options);
+        UserAreaVM Add(UserAreaVM userArea);
+        UserAreaVM Update(UserAreaVM userArea);
         void Delete(string areaId);
     }
 }

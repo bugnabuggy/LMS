@@ -10,22 +10,8 @@ using AppContext = LMS.Services.AppContext;
 
 namespace LMS.Tests
 {
-    public class GoalServiceTests
+    public class GoalServiceTests : AUnitTest
     {
-        private FakeRepository<Goal> _goalRepository;
-
-        private FakeRepository<UserArea> _userAreaRepository;
-
-        private AppContext _context;
-
-        public GoalServiceTests()
-        {
-            _context = new AppContext();
-            _context.TimeZoneId = "Bangladesh Standard Time";
-            _userAreaRepository = new FakeRepository<UserArea>();
-            _goalRepository = new FakeRepository<Goal>();
-        }
-
         private GoalService CreateGoalService()
         {
             //Unfortunately, DI libraries (like Ninject) don't support coreclr yet. 
@@ -277,6 +263,32 @@ namespace LMS.Tests
         {
             var service = CreateGoalService();
             service.Delete("Some goal id");
+        }
+
+        [Fact]
+        public void RemoveAnotherUserGoalDontRemoveTheGoal()
+        {
+            var user1 = new User();
+            var user2 = new User();
+            _context.UserId = user1.Id;
+
+            var area1 = new UserArea { User = user2, UserId = user2.Id };
+            _userAreaRepository.Source = new List<UserArea>
+            {
+                area1,
+            };
+
+            _goalRepository.Source = new List<Goal>
+            {
+                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.InProgress},
+                new Goal {AreaId = area1.Id, Area = area1, StateId = GoalStateType.InProgress}
+            };
+
+            var service = CreateGoalService();
+            var goalId = _goalRepository.Source[0].Id;
+            service.Delete(goalId);
+
+            Assert.Equal(2, _goalRepository.Source.Count);
         }
 
         [Fact]

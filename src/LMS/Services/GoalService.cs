@@ -10,8 +10,6 @@ namespace LMS.Services
 {
     public class GoalService : IGoalService
     {
-        private const int _lastGoalLimit = 5;
-
         private IAppContext _appContext;
 
         private IRepository<Goal> _goalRepository;
@@ -39,52 +37,24 @@ namespace LMS.Services
         {
             CheckUserArea(options.AreaId);
 
-            List<Goal> list = null;
-
             var query = _goalRepository.Items
                 .Where(goal => goal.Area.UserId == _appContext.UserId
                     && goal.AreaId == options.AreaId);
 
-            if (options.OnlyLastGoals)
+            var goalFilterOptions = new GoalFilterOptions
             {
-                var lastGoals = query
-                    .Where(goal => goal.StateId == GoalStateType.InProgress)
-                    .Select(goal => new
-                    {
-                        Goal = goal,
-                        LastUpdate = (DateTime?)goal.Tasks.Select(t => t.Timestamp).OrderByDescending(t => t).FirstOrDefault()
-                    })
-                    .Where(g => g.LastUpdate != null)
-                    .OrderByDescending(goal => goal.LastUpdate)
-                    .Take(_lastGoalLimit)
+                IncludeCompletedGoals = options.IncludeCompletedGoals,
+                OnlyLastGoals = options.OnlyLastGoals
+            };
+
+            var list = GoalFilter.Filter(query, goalFilterOptions, _timeConverter);
+            if (list.Count > 0)
+            {
+                return list[0].Goals
+                    .Select(Mapper.Map)
                     .ToList();
-
-                if (lastGoals.Count > 0)
-                {
-                    var lastGoalDate = lastGoals.First().LastUpdate;
-                    lastGoalDate = _timeConverter.ToLocal(lastGoalDate.Value);
-                    var fromDate = _timeConverter.ToUtc(lastGoalDate.Value.Date);
-                    var toDate = lastGoalDate;
-
-                    list = lastGoals
-                        .Where(goal => goal.LastUpdate >= fromDate && goal.LastUpdate <= toDate)
-                        .Select(g => g.Goal)
-                        .ToList();
-                }
             }
-            else
-            {
-                if (!options.IncludeCompletedGoals)
-                {
-                    query = query.Where(goal => goal.StateId == GoalStateType.InProgress);
-                }
-                list = query.ToList();
-            }
-
-            return list
-                .OrderBy(goal => goal.Priority)
-                .Select(Mapper.Map)
-                .ToList();
+            return new List<GoalVM>();
         }
 
         public GoalVM Get(string goalId)
@@ -136,7 +106,7 @@ namespace LMS.Services
 
             if (item == null)
             {
-                throw new ArgumentException($"Goal with id = {goal.Id} is not exists");
+                throw new ItemNotFountException($"Goal with id = {goal.Id} is not exists");
             }
 
             Mapper.Map(goal, item);
