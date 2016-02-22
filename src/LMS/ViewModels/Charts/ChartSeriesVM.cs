@@ -11,6 +11,16 @@ namespace LMS.ViewModels.Charts
 
         public string strokeColor { get; set; }
 
+        public string fillColor { get; set; }
+
+        public string pointColor { get; set; }
+
+        public string pointStrokeColor { get; set; }
+
+        public string pointHighlightFill { get; set; }
+
+        public string pointHighlightStroke { get; set; }
+
         public List<float> data { get; set; }
 
         public ChartSeriesVM()

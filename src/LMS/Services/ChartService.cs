@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LMS.Core;
@@ -42,30 +43,41 @@ namespace LMS.Services
             tasks.ForEach(t => t.Task.Timestamp = _timeConverter.ToLocal(t.Task.Timestamp));
 
 
-            var tasksByDate = tasks.GroupBy(g => g.Task.Timestamp.Date).ToList();
-            var dateCount = tasksByDate.Count();
+            var tasksByDate = tasks.GroupBy(g => g.Task.Timestamp.Date).OrderBy(g => g.Key).ToList();
+            var fromDate = tasks.Min(t => t.Task.Timestamp.Date);
+            var toDate = tasks.Max(t => t.Task.Timestamp.Date);
+            var dateCount = (int)(toDate - fromDate).TotalDays + 1;
 
             var areaIds = tasks.Select(t => t.AreaId).Distinct().ToList();
 
             var areasDict = new Dictionary<string, List<float>>(areaIds.Count);
             areaIds.ForEach(a => areasDict.Add(a, new List<float>(dateCount)));
 
+            var sumDict = new Dictionary<string, float>(areaIds.Count);
+            areaIds.ForEach(a => sumDict.Add(a, 0f));
+
             var dates = new List<DateTime>(dateCount);
 
-            foreach (var dateTasks in tasksByDate)
+            for (int i = 0; i < dateCount; i++)
             {
-                var values = dateTasks.GroupBy(t => t.AreaId)
+                var date = fromDate.AddDays(i);
+                var dateTasks = tasksByDate.FirstOrDefault(t => t.Key == date);
+
+                var values = dateTasks?.GroupBy(t => t.AreaId)
                     .Select(t => new
                     {
                         AreaId = t.Key,
-                        Value = t.Any() ? t.Sum(v => v.Task.TimeSpentMin) : 0
-                    });
+                        Value = t.Any() ? t.Sum(v => v.Task.TimeSpentMin) : 0,
+                    })
+                    .ToList();
 
-                foreach (var dateValue in values)
+                foreach (var areaId in areaIds)
                 {
-                    areasDict[dateValue.AreaId].Add(dateValue.Value);
+                    var dateValue = values?.FirstOrDefault(t => t.AreaId == areaId);
+                    sumDict[areaId] += dateValue?.Value ?? 0;
+                    areasDict[areaId].Add(sumDict[areaId]);
                 }
-                dates.Add(dateTasks.Key);
+                dates.Add(date);
             }
 
             var areas = _areaRepository.Items
@@ -79,12 +91,18 @@ namespace LMS.Services
                     {
                         data = a.Value,
                         strokeColor = userArea.Color,
+                        fillColor = SetColorOpacity(userArea.Color, 0.2f),
+                        pointColor = userArea.Color,
+                        pointStrokeColor = "#fff",
+                        pointHighlightFill = "#fff",
+                        pointHighlightStroke = userArea.Color,
                         label = userArea.Title
                     };
                 })
                 .ToList();
 
             var labels = dates
+                .OrderBy(d => d)
                 .Select(d => d.DayOfWeek == DayOfWeek.Monday ? d.ToString("M") : string.Empty)
                 .ToList();
 
@@ -93,6 +111,16 @@ namespace LMS.Services
                 labels = labels,
                 datasets = datasets
             };
+        }
+
+        private string SetColorOpacity(string color, float opacity)
+        {
+            var colorSt = color.TrimStart('#');
+            int red = int.Parse(colorSt.Substring(0, 2), NumberStyles.HexNumber);
+            int green = int.Parse(colorSt.Substring(2, 2), NumberStyles.HexNumber);
+            int blue = int.Parse(colorSt.Substring(4, 2), NumberStyles.HexNumber);
+
+            return $"rgba({red}, {green}, {blue}, {opacity}";
         }
     }
 }
