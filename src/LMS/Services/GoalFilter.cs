@@ -78,11 +78,13 @@ namespace LMS.Services
                     .ToList();
             }
 
-            FillLastTasks(list, taskRepository);
+            FillLastTasks(list, taskRepository, timeConverter);
             return list;
         }
 
-        private static void FillLastTasks(List<GoalsByArea> goals, IRepository<CalendarTask> taskRepository)
+        private static void FillLastTasks(List<GoalsByArea> goals, 
+            IRepository<CalendarTask> taskRepository, 
+            ITimeConverter timeConverter)
         {
             var goalsIds = goals
                 .SelectMany(g => g.Goals)
@@ -96,10 +98,12 @@ namespace LMS.Services
                 .Where(t => t != null)
                 .ToList();
 
+            var today = timeConverter.ToLocal(DateTime.UtcNow).Date;
+
             foreach (var goal in goals.SelectMany(g => g.Goals))
             {
                 var task = tasks.FirstOrDefault(t => t.GoalId == goal.Id);
-                if (task != null)
+                if (task != null && timeConverter.ToLocal(task.Timestamp) > today)
                 {
                     goal.Tasks.Add(task);
                 }
