@@ -68,8 +68,8 @@ namespace LMS.Services
                     query = query.Where(goal => goal.StateId == GoalStateType.InProgress);
                 }
                 list = query
-                    .GroupBy(g => g.AreaId)
                     .ToList()
+                    .GroupBy(g => g.AreaId)
                     .Select(g => new GoalsByArea
                     {
                         AreaId = g.Key,
