@@ -50,7 +50,7 @@ textarea {
     display: table;
     vertical-align: middle;
     text-align: center;
-    height: 300px !important;
+    height: 250px !important;
     height: 100%;
 }
 
@@ -92,7 +92,12 @@ textarea {
 
 .jk-a-label {
     font-size: 1.5em;
-    color: white;
+    color: white !important;
+}
+
+.jk-g-label {
+    font-size: 1.3em;
+    color: #333 !important;
 }
 
 .jk-a-edit {

@@ -9,9 +9,16 @@
     goals: {
         page:"/Planning",
         list: "/api/areas/?IncludeGoals=true", //GET
-        add:"/api/goals/",  // POST
+        add: "/api/areas/",  // POST
         edit: "/api/goals/", // PUT
         del: "/api/goals/" //DELETE
+    },
+    dashboard: {
+        page: "/Dashboard",
+        list: "/api/areas/?IncludeGoals=true", //GET
+        add: "/goals/",  // POST
+        edit: "/api/goals/", // PUT
+        del: "/calendartasks/" //DELETE
     }
 }
 

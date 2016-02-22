@@ -1,8 +1,7 @@
 ﻿(function(module) {
     var ctrl = function(areasSrv,scope) {
         var ctrl = this;
-
-        areasSrv.list();
+        
         ctrl.areas = areasSrv.areas;
 
         ctrl.refresh = function () {
