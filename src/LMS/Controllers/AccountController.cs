@@ -63,12 +63,32 @@ namespace LMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            return await LoginInternal(model, returnUrl);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Signin(string email, string password, string returnUrl = null)
+        {
+            return await LoginInternal(new LoginViewModel
+            {
+                Email = email,
+                Password = password,
+                RememberMe = true
+            }, returnUrl);
+        }
+
+        private async Task<IActionResult> LoginInternal(LoginViewModel model, string returnUrl)
+        {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result =
+                    await
+                        _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                            lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -115,26 +135,26 @@ namespace LMS.Controllers
             {
                 using (var uof = _unitOfWorkFactory.Create())
                 {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     _userRepository.Add(user.User);
                     uof.SaveChanges();
 
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
-                    //return RedirectToAction(nameof(HomeController.Index), "Home");
-                    return RedirectToAction(nameof(AreasController.Index), "Areas");
+                    var result = await _userManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                        // Send an email with this link
+                        //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                        //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                        //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation(3, "User created a new account with password.");
+                        //return RedirectToAction(nameof(HomeController.Index), "Home");
+                        return RedirectToAction(nameof(AreasController.Index), "Areas");
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
-            }
             }
 
             // If we got this far, something failed, redisplay form
