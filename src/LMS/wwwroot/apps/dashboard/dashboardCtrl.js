@@ -21,7 +21,7 @@
         }
 
         ctrl.refresh = function (loadAll) {
-            if (typeof loadAll == "undefined" || loadAll)
+            if (!loadAll)
                 $http.get(endpoints.dashboard.list).then(goodList, badList);
             else
                 $http.get(endpoints.dashboard.listAll).then(goodList, badList);
@@ -34,7 +34,7 @@
 
         // Check
 
-        var goodChk = function(response) {
+        var goodChk = function (response) {
             ctrl.refresh(ctrl.loadAll);
         }
 
@@ -45,16 +45,16 @@
         }
 
         ctrl.check = function (event, area, goal, task) {
-            debugger;
             event.target.disabled = true;
             if (task) {
                 $http.delete(endpoints.dashboard.del + task.Id).then(goodChk, badChk);
+            } else {
+                $http.post(endpoints.dashboard.add + goal.Id + "/calendartasks", { TimeSpentMin :60}).then(goodChk, badChk);    
             }
-
-            $http.post(endpoints.dashboard.add + goal.Id + "/calendartasks", { TimeSpentMin :60}).then(goodChk, badChk);
+            
         }
 
-        ctrl.refresh();
+        ctrl.refresh(ctrl.loadAll);
     }
 
     app.controller('dashboardCtrl', ['$http','$rootScope',ctrl]);

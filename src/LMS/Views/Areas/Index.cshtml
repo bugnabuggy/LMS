@@ -30,7 +30,7 @@
     <div class="list-group-item row">
         <div class="col-xs-12" ng-repeat="item in ars.areas">
             <div class="panel panel-default ">
-                <div class="panel-body " style="opacity:0.5;background-color:{{item.Color}}; ">
+                <div class="panel-body jk-opacity " style="background-color:{{item.Color}}; ">
                     <div class="col-xs-10">
                         <input ng-keypress="ars.key(item,$event)" ng-hide="!item.editVisible" type="text" maxlength="50" class="form-control col-xs-12 jk-a-edit" ng-model="item.Title" value=""/>
                         <label class="jk-a-label" ng-hide="item.labelVisible">{{item.Title}}</label>
