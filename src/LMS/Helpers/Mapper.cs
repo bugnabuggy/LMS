@@ -10,15 +10,17 @@ namespace LMS.Services
     //Unfortunately, manual mapping, because Automapper is not supports coreclr
     public static class Mapper
     {
-        public static GoalVM Map(Goal goal)
+        public static GoalVM Map(Goal goal, ITimeConverter timeConverter)
         {
             return new GoalVM
             {
                 Id = goal.Id,
                 StateId = goal.StateId,
                 Description = goal.Description,
-                Priority = goal.Priority
-
+                Priority = goal.Priority,
+                LastTask = goal.Tasks?.Count > 0
+                    ? Map(goal.Tasks?.FirstOrDefault(), timeConverter)
+                    : null
             };
         }
 
@@ -38,7 +40,7 @@ namespace LMS.Services
             };
         }
 
-        public static UserAreaVM Map(UserArea userArea)
+        public static UserAreaVM Map(UserArea userArea, ITimeConverter timeConverter)
         {
             return new UserAreaVM
             {
@@ -46,8 +48,8 @@ namespace LMS.Services
                 Color = userArea.Color,
                 Priority = userArea.Priority,
                 Title = userArea.Title,
-                Goals = userArea.Goals != null 
-                    ? userArea.Goals.Select(Map).ToList() 
+                Goals = userArea.Goals != null
+                    ? userArea.Goals.Select(g => Map(g, timeConverter)).ToList()
                     : new List<GoalVM>()
             };
         }

@@ -20,7 +20,8 @@ namespace LMS.Tests
                 new TimeConverter(_context),
                 _goalRepository,
                 new UnitOfWorkFactoryFake(),
-                _userAreaRepository);
+                _userAreaRepository,
+                new FakeRepository<CalendarTask>());
         }
 
         [Fact]

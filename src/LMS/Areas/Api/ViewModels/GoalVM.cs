@@ -19,6 +19,8 @@ namespace LMS.Areas.Api.ViewModels
 
         public int Priority { get; set; }
 
+        public CalendarTaskVM LastTask { get; set; }
+
         public GoalVM()
         {
         }

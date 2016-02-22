@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Core;
 using LMS.Core.Models;
 
 namespace LMS.Services
@@ -10,7 +11,10 @@ namespace LMS.Services
     {
         private const int _lastGoalLimit = 5;
 
-        public static List<GoalsByArea> Filter(IQueryable<Goal> query, GoalFilterOptions options, ITimeConverter timeConverter)
+        public static List<GoalsByArea> Filter(IQueryable<Goal> query, 
+            GoalFilterOptions options, 
+            ITimeConverter timeConverter,
+            IRepository<CalendarTask> taskRepository)
         {
             var list = new List<GoalsByArea>();
 
@@ -25,14 +29,13 @@ namespace LMS.Services
                         LastUpdate = (DateTime?)goal.Tasks.Select(t => t.Timestamp).OrderByDescending(t => t).FirstOrDefault()
                     })
                     .ToList()
-                    //.Where(g => g.LastUpdate != null)
                     .GroupBy(g => g.Goal.AreaId)
                     .Select(group => new
                     {
                         AreaId = group.Key,
                         Goals = group
                             .OrderByDescending(goal => goal.LastUpdate)
-                            .Take(_lastGoalLimit)
+                            .Take(_lastGoalLimit),
                     })
                     .ToList();
 
@@ -53,7 +56,7 @@ namespace LMS.Services
                                 .Select(g => g.Goal)
                                 .OrderBy(goal => goal.Priority)
                                 .ToList(),
-                            AreaId = goalsByArea.AreaId
+                            AreaId = goalsByArea.AreaId,
                         });
                     }
                 }
@@ -70,12 +73,37 @@ namespace LMS.Services
                     .Select(g => new GoalsByArea
                     {
                         AreaId = g.Key,
-                        Goals = g.OrderBy(goal => goal.Priority).ToList()
+                        Goals = g.OrderBy(goal => goal.Priority).ToList(),
                     })
                     .ToList();
             }
 
+            FillLastTasks(list, taskRepository);
             return list;
+        }
+
+        private static void FillLastTasks(List<GoalsByArea> goals, IRepository<CalendarTask> taskRepository)
+        {
+            var goalsIds = goals
+                .SelectMany(g => g.Goals)
+                .Select(g => g.Id)
+                .ToList();
+
+            var tasks = taskRepository.Items
+                .Where(t => goalsIds.Contains(t.GoalId))
+                .GroupBy(t => t.GoalId)
+                .Select(t => t.OrderByDescending(ts => ts.Timestamp).FirstOrDefault())
+                .Where(t => t != null)
+                .ToList();
+
+            foreach (var goal in goals.SelectMany(g => g.Goals))
+            {
+                var task = tasks.FirstOrDefault(t => t.GoalId == goal.Id);
+                if (task != null)
+                {
+                    goal.Tasks.Add(task);
+                }
+            }
         }
     }
 
