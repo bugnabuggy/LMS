@@ -13,7 +13,7 @@ namespace LMS.Areas.Api.ViewModels
     {
         public string Id { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         [MaxLength(ModelConstrains.TitleLength)]
         public string Title { get; set; }
 
