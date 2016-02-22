@@ -72,6 +72,7 @@ namespace LMS
             services.AddScoped<IUserAreaService, UserAreaService>();
             services.AddScoped<IGoalService, GoalService>();
             services.AddScoped<ICalendarTaskService, CalendarTaskService>();
+            services.AddScoped<IChartService, ChartService>();
 
             services.AddScoped<ITimeConverter, TimeConverter>();
             services.AddScoped<IAppContext, Services.AppContext>();

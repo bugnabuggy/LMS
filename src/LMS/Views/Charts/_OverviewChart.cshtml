@@ -1,0 +1,18 @@
+﻿<div id="chart-container">
+
+</div>
+@section scripts
+{
+    <script>
+        $.ajax('@Url.Action("Overview", "Charts")', {
+            method: 'GET',
+            dataType: "json",
+            success: function (data) {
+                var ctx = $("#chart-container").get(0).getContext("2d");
+                var chart = new Chart(ctx);
+                var lineChart = chart.Line(data);
+            }
+        });
+
+    </script>
+}
