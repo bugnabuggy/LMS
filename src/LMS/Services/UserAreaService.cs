@@ -20,17 +20,21 @@ namespace LMS.Services
 
         private IAppContext _appContext;
 
+        private IRepository<CalendarTask> _taskRepository;
+
         public UserAreaService(IRepository<UserArea> userAreaRepository,
             IRepository<Goal> goalRepository,
             ITimeConverter timeConverter,
             IUnitOfWorkFactory unitOfWorkFactory,
-            IAppContext appContext)
+            IAppContext appContext,
+            IRepository<CalendarTask> taskRepository)
         {
             _userAreaRepository = userAreaRepository;
             _goalRepository = goalRepository;
             _timeConverter = timeConverter;
             _unitOfWorkFactory = unitOfWorkFactory;
             _appContext = appContext;
+            _taskRepository = taskRepository;
         }
 
         public List<UserAreaVM> List(AreaListOptions options)
@@ -50,14 +54,14 @@ namespace LMS.Services
                     IncludeCompletedGoals = options.IncludeCompletedGoals,
                     OnlyLastGoals = options.OnlyLastGoals
                 };
-                var goals = GoalFilter.Filter(goalsQuery, goalFilterOptions, _timeConverter);
+                var goals = GoalFilter.Filter(goalsQuery, goalFilterOptions, _timeConverter, _taskRepository);
 
                 areas.ForEach(area => area.Goals = goals.FirstOrDefault(g => g.AreaId == area.Id)?.Goals ?? new List<Goal>());
             }
 
             return areas
                 .OrderBy(a => a.Priority)
-                .Select(Mapper.Map)
+                .Select(g => Mapper.Map(g, _timeConverter))
                 .ToList();
         }
 
@@ -81,7 +85,7 @@ namespace LMS.Services
                     IncludeCompletedGoals = options.IncludeCompletedGoals,
                     OnlyLastGoals = options.OnlyLastGoals
                 };
-                var goals = GoalFilter.Filter(goalsQuery, goalFilterOptions, _timeConverter);
+                var goals = GoalFilter.Filter(goalsQuery, goalFilterOptions, _timeConverter, _taskRepository);
 
                 if (goals.Count > 0)
                 {
@@ -89,7 +93,7 @@ namespace LMS.Services
                 }
             }
 
-            return Mapper.Map(item);
+            return Mapper.Map(item, _timeConverter);
         }
 
         public UserAreaVM Add(UserAreaVM userArea)
@@ -103,7 +107,7 @@ namespace LMS.Services
                 uof.SaveChanges();
             }
 
-            return Mapper.Map(item);
+            return Mapper.Map(item, _timeConverter);
         }
 
         public UserAreaVM Update(UserAreaVM userArea)
@@ -124,7 +128,7 @@ namespace LMS.Services
                 uof.SaveChanges();
             }
 
-            return Mapper.Map(item);
+            return Mapper.Map(item, _timeConverter);
         }
 
         public void Delete(string areaId)

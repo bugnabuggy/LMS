@@ -20,16 +20,20 @@ namespace LMS.Services
 
         private IUnitOfWorkFactory _unitOfWorkFactory;
 
+        private IRepository<CalendarTask> _taskRepository;
+
         public GoalService(IAppContext appContext,
             ITimeConverter timeConverter,
             IRepository<Goal> goalRepository,
             IUnitOfWorkFactory unitOfWorkFactory,
-            IRepository<UserArea> userAreaRepository)
+            IRepository<UserArea> userAreaRepository,
+            IRepository<CalendarTask> taskRepository)
         {
             _appContext = appContext;
             _goalRepository = goalRepository;
             _unitOfWorkFactory = unitOfWorkFactory;
             _userAreaRepository = userAreaRepository;
+            _taskRepository = taskRepository;
             _timeConverter = timeConverter;
         }
 
@@ -47,11 +51,11 @@ namespace LMS.Services
                 OnlyLastGoals = options.OnlyLastGoals
             };
 
-            var list = GoalFilter.Filter(query, goalFilterOptions, _timeConverter);
+            var list = GoalFilter.Filter(query, goalFilterOptions, _timeConverter, _taskRepository);
             if (list.Count > 0)
             {
                 return list[0].Goals
-                    .Select(Mapper.Map)
+                    .Select(g => Mapper.Map(g, _timeConverter))
                     .ToList();
             }
             return new List<GoalVM>();
@@ -68,7 +72,15 @@ namespace LMS.Services
                 throw new ItemNotFountException($"Goal with id = {goalId} is not exists");
             }
 
-            return Mapper.Map(item);
+            var lastTask = _taskRepository.Items
+                .FirstOrDefault(t => t.GoalId == goalId);
+
+            if (lastTask != null)
+            {
+                item.Tasks.Add(lastTask);
+            }
+
+            return Mapper.Map(item, _timeConverter);
         }
 
         public GoalVM Add(GoalVM goal, string areaId)
@@ -85,7 +97,7 @@ namespace LMS.Services
                 uof.SaveChanges();
             }
 
-            return Mapper.Map(item);
+            return Mapper.Map(item, _timeConverter);
         }
 
         private void CheckUserArea(string areaId)
@@ -117,7 +129,7 @@ namespace LMS.Services
                 uof.SaveChanges();
             }
 
-            return Mapper.Map(item);
+            return Mapper.Map(item, _timeConverter);
         }
 
         public void Delete(string goalId)

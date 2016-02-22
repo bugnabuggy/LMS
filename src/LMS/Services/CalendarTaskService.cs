@@ -42,6 +42,7 @@ namespace LMS.Services
             {
                 item.GoalId = goalId;
                 _taskRepository.Add(item);
+                uof.SaveChanges();
             }
 
             return Mapper.Map(item, _timeConverter);

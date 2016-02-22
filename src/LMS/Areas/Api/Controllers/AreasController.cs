@@ -22,26 +22,54 @@ namespace LMS.Areas.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserAreaVM> Get(bool includeGoals = true, bool onlyLastGoals = true)
+        public IEnumerable<UserAreaVM> Get(bool includeGoals = true, bool onlyLastGoals = true, bool includeCompletedGoals = false)
         {
-            return _userAreaService.List(new AreaListOptions { IncludeGoals = includeGoals, OnlyLastGoals = onlyLastGoals });
+            var options = new AreaListOptions
+            {
+                IncludeGoals = includeGoals,
+                OnlyLastGoals = onlyLastGoals,
+                IncludeCompletedGoals = includeCompletedGoals
+            };
+            return _userAreaService.List(options);
         }
 
         [HttpGet("{id}")]
-        public UserAreaVM Get(string id, bool includeGoals = true, bool onlyLastGoals = true)
+        public UserAreaVM Get(string id, bool includeGoals = true, bool onlyLastGoals = true, bool includeCompletedGoals = false)
         {
-            return _userAreaService.Get(id, new AreaListOptions { IncludeGoals = includeGoals, OnlyLastGoals = onlyLastGoals });
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("Area id is not set");
+            }
+            var options = new AreaListOptions
+            {
+                IncludeGoals = includeGoals,
+                OnlyLastGoals = onlyLastGoals,
+                IncludeCompletedGoals = includeCompletedGoals
+            };
+            return _userAreaService.Get(id, options);
         }
 
         [HttpPost]
         public UserAreaVM Post([FromBody]UserAreaVM userArea)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException();
+            }
             return _userAreaService.Add(userArea);
         }
 
         [HttpPut("{id}")]
         public UserAreaVM Put(string id, [FromBody]UserAreaVM userArea)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("Area id is not set");
+            }
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException();
+            }
             userArea.Id = id;
             return _userAreaService.Update(userArea);
         }
@@ -49,6 +77,10 @@ namespace LMS.Areas.Api.Controllers
         [HttpDelete("{id}")]
         public string Delete(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("Area id is not set");
+            }
             _userAreaService.Delete(id);
             return id;
         }
