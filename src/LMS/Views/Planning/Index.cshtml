@@ -13,17 +13,13 @@
 @section scripts
 {
 
-    <script src="~/lib/angular-animate/angular-animate.js"></script>
     <script src="~/lib/underscore/underscore-min.js"></script>
 
     <script src="~/apps/endpoints.js"></script>
 
-    <script src="~/apps/commonApp.js"></script>
-    <script src="~/apps/areasApp.js"></script>
-    <script src="~/apps/areas/areasSrv.js"></script>
-    <script src="~/apps/areas/areasCtrl.js"></script>
+    
     <script src="~/apps/goalsApp.js"></script>
-    <script src="~/apps/goals/goalsSrv.js"></script>
+    
     <script src="~/apps/goals/goalsCtrl.js"></script>
 
 }
@@ -49,12 +45,12 @@
                     <div class="col-xs-2">
                         <button class="btn btn-default" ng-click="gls.edit(item,goal)"><i class="fa fa-pencil"></i></button>
                         <span class="jk-h-spacer"></span>
-                        <button class="btn btn-default" ng-click="gls.del(item,goal)"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-default" ng-click="gls.del(goal)"><i class="fa fa-trash"></i></button>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="list-group-item col-xs-12">
-                    <div class="col-xs-2"><button class="btn btn-default" ng-click="gls.add(item,item.Description)"><i class="fa fa-plus"></i></button></div><div class="col-xs-10"><input id="{{item.Id}}" type="text" maxlength="100" class="form-control" ng-model="item.Description" /></div>
+                    <div class="col-xs-2"><button class="btn btn-default" ng-click="gls.add(item,item.Description)"><i class="fa fa-plus"></i></button></div><div class="col-xs-10"><input id="{{item.Id}}"  ng-keypress="gls.key(item,{Description:item.Description},$event)" type="text" maxlength="100" class="form-control" ng-model="item.Description" /></div>
                 </div>
             </div>
         </div>

@@ -49,7 +49,11 @@
             }
         }
 
-        ctrl.edit = function(area, goal) {
+        ctrl.edit = function (area, goal, skip) {
+            if (!(typeof skip == "undefined")) {
+                ctrl.add(area, goal.Description);
+                return;
+            }
             if (!goal.editVisible) {
                 goal.labelVisible = true;
                 goal.editVisible = true;
@@ -62,9 +66,9 @@
             }
         }
 
-        ctrl.key = function (area,goal, key) {
+        ctrl.key = function (area, goal, key) {
             if (key.keyCode == 13) {
-                ctrl.edit(area, goal);
+                ctrl.edit(area, goal, false);
             }
         };
 

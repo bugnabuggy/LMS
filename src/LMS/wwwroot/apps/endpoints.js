@@ -8,7 +8,7 @@
     },
     goals: {
         page:"/Planning",
-        list: "/api/areas/?IncludeGoals=true", //GET
+        list: "/api/areas/?IncludeGoals=true&onlyLastGoals=false", //GET
         add: "/api/areas/",  // POST
         edit: "/api/goals/", // PUT
         del: "/api/goals/" //DELETE

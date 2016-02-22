@@ -1,3 +1,3 @@
 ﻿(function() {
-    var app = angular.module('areasApp', ['commonApp']);
+    var app = angular.module('areasApp', []);
 })()

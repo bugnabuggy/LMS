@@ -1,12 +1,72 @@
 ﻿(function(module) {
-    var ctrl = function(areasSrv,scope) {
+    var ctrl = function(scope,$http) {
         var ctrl = this;
-        
-        ctrl.areas = areasSrv.areas;
+
+        ctrl.areas = new Array();//areasSrv.areas;
+
+         // get Areas
+        var success = function (response) {
+            ctrl.areas = response.data;
+        }
+        var fail = function (response) {
+            if (typeof testEnviroment == "undefined") {
+                alert("Status code: " + response.status + "  " + response.statusText);
+            }
+        }
+
+        ctrl.list = function () {
+            $http.get(endpoints.areas.list).then(success, fail);
+        }
+
+        // add Area
+        var goodPost = function(response) {
+            ctrl.areas.push(response.data);
+        }
+
+        var badPost = function (response) {
+            if (typeof testEnviroment == "undefined")
+            alert("Can`t add Area: " + response.statusText);
+        }
+
+        ctrl.add = function (area) {
+            $http.post(endpoints.areas.add, area).then(goodPost, badPost);
+        }
+
+        // edit Area
+        var goodPut = function (response) {
+            var item = _.findWhere(ctrl.areas, { Id: response.data.Id });
+            var index = _.indexOf(ctrl.areas, item);
+            ctrl.areas[index] = response.data;
+        }
+
+        var badPut = function (response) {
+            if (typeof testEnviroment == "undefined")
+            alert("Cant update Area: " + response.statusText);
+        }
+
+        ctrl.edit = function (area) {
+            $http.put(endpoints.areas.edit+area.Id, area).then(goodPut, badPut);
+        }
+
+        // del Area
+        var goodDel = function (response) {
+            var item = _.findWhere(ctrl.areas, { Id: response.data.Id });
+            var index = _.indexOf(ctrl.areas, item);
+            ctrl.areas.splice(index, 1);
+            
+        }
+
+        var badDel = function (response) {
+            if (typeof testEnviroment == "undefined")
+            alert("Cant delete Area: " + response.statusText);
+        }
+
+        ctrl.del = function (area) {
+            $http.delete(endpoints.areas.del+area.Id, area).then(goodDel, badDel);
+        }
 
         ctrl.refresh = function () {
-            areasSrv.list();
-            ctrl.areas = areasSrv.areas;
+            ctrl.list();
         };
 
         ctrl.addArea = function() {
@@ -15,9 +75,9 @@
                 Title:""
             }
             newArea.Color = ctrl.generateColor();
-            areasSrv.add(newArea);
-            ctrl.areas = areasSrv.areas;
-            //areasSrv.areas.push(newArea);
+            ctrl.add(newArea);
+            ctrl.list();
+   
         }
 
         ctrl.editArea = function(area) {
@@ -25,7 +85,7 @@
                 area.labelVisible = true;
                 area.editVisible = true;
             } else {
-                areasSrv.edit(area);
+                ctrl.edit(area);
 
                 area.editVisible = false;
                 window.setTimeout(function (scope) {
@@ -56,13 +116,11 @@
 
             return color;
         }
-        
-        window.setTimeout(function (scope) {
-            ctrl.areas = areasSrv.areas;
-            scope.$apply();
-        }, 1000, scope);
+
+        ctrl.list();
+       
     }
 
-    module.controller('areasCtrl',['areasSrv','$scope', ctrl]);
+    module.controller('areasCtrl',['$scope','$http', ctrl]);
 
 })(angular.module('areasApp'));

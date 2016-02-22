@@ -1,3 +1,3 @@
 ﻿(function() {
-    var app = angular.module('dashboardApp', ['commonApp']);
+    var app = angular.module('dashboardApp', []);
 })()
