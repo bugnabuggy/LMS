@@ -72,6 +72,14 @@ namespace LMS.Services
                 throw new ItemNotFountException($"Goal with id = {goalId} is not exists");
             }
 
+            var lastTask = _taskRepository.Items
+                .FirstOrDefault(t => t.GoalId == goalId);
+
+            if (lastTask != null)
+            {
+                item.Tasks.Add(lastTask);
+            }
+
             return Mapper.Map(item, _timeConverter);
         }
 
