@@ -72,7 +72,8 @@ namespace LMS.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction(nameof(DashboardController.Index), "Dashboard");
                 }
                 if (result.RequiresTwoFactor)
                 {

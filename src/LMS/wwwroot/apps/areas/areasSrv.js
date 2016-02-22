@@ -9,8 +9,11 @@
             srv.areas = response.data;
         }
         var fail = function (response) {
-            if (!testEnviroment)
+            if (typeof testEnviroment == "undefined") {
                 alert("Status code: " + response.status + "  " + response.statusText);
+            }
+            
+                
         }
 
         srv.list = function () {
@@ -25,7 +28,7 @@
         }
 
         var badPost = function (response) {
-            if (!testEnviroment)
+            if (typeof testEnviroment == "undefined")
             alert("Can`t add Area: " + response.statusText);
         }
 
@@ -41,7 +44,7 @@
         }
 
         var badPut = function (response) {
-            if (!testEnviroment)
+            if (typeof testEnviroment == "undefined")
             alert("Cant update Area: " + response.statusText);
         }
 
@@ -58,7 +61,7 @@
         }
 
         var badDel = function (response) {
-            if (!testEnviroment)
+            if (typeof testEnviroment == "undefined")
             alert("Cant delete Area: " + response.statusText);
         }
 
