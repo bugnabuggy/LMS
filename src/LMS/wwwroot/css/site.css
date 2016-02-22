@@ -33,6 +33,21 @@ textarea {
     }
 }
 
+.jk-max-hight {
+    height: 250px !important;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 98%;
+}
+
+.jk-opacity {
+    opacity:0.8;    
+}
+
+.jk-no-padding {
+    padding: 0 !important;
+}
+
 .jk-full-area {
     height: 100%;
     width: 100%;

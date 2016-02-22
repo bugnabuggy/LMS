@@ -15,7 +15,7 @@
 
 <article>
     <section class="row jk-row">
-        <div class="col-xs-4 jk-main-tiles" style="background-color: gray; height: 100%">
+        <div class="col-sm-4 jk-main-tiles" style="background-color: gray; height: 100%">
             <table class="jk-full-area">
                 <tr>
                     <td>
@@ -32,27 +32,80 @@
             </table>
 
         </div>
-        <div class="col-xs-8 jk-main-tiles" style="background-color: lemonchiffon;">
-            <p class="jk-padding jk-justify jk-y-scroll">
-                Для кого этот сервис:
-                - Ты хочешь изменить свою жизнь и достич определенных целей
-                - Никак не можешь заставить себя планировать свое время
-                - У тебя есть понимание, что нужно решить определенные задачи, чтобы достигнуть цели, но ты не хочешь запариваться с планированием
-                - У тебя переодически возникают идеи, которые ты бы хотел реализовать. И тебе хотелось бы их куда-то записать, чтобы вернуться к ним позже
+        <div class="col-sm-8 jk-main-tiles" style="background-color: lemonchiffon;">
+            <div class="jk-padding jk-justify jk-y-scroll">
+                <h4>
+                    This site is for:
+                </h4>
+                <ul>
+                    <li>You want to change your life and achieve certain goals</li>
+                    <li>You can't bring yourself to plan your time</li>
+                    <li>You have an understanding that you need to meet certain challenges to achieve the goal, but you don't want to pretend with planning</li>
+                    <li>You periodically have ideas that you would like to implement. And you want them somewhere to write, to return to them later</li>
+                </ul>
 
-                Как это работает. Ты выбираешь цели, которых хочешь достичь (не более 4). Закидываешь список дел, которые нужно сделать, чтобы этого достич. Дела могу быть одноразовые - сделал и забыл, либо же могут повторяться каждый день. Допустим, ты всегда хотел вести свой блог, но постоянно на это не хватает времени. Ты можешь добавить такую цель в список. Каждый день, система будет присылать тебе напоминание, что нужно чекнуть дела, которыми ты сегодня занимался. Это быстро, просто, займет 2 минуты и это обязательно! Помни, система питается твоими идеями! Каждый пропущенный день стоит одного деления заряда батарейки. Когда батарейка разрядится, система перестанет работать. И тебе придется потратить 1 бакс, чтобы мы поменяли тебе батарейки!
-
-                Если вдруг у тебя возникает новоя идея прочитать какую-то статью, сходить куда-нибудь, купить что-нибудь - добавь ее в список. Система подскажет, кода придет время заняться ей.
-            </p>
+                <p>
+                    How it works: You choose the goals you want to achieve (no more than 4). Fill up the list of things you need to do to achieve this. Things can be one-time - done and forgotten, or may be repeated every day. <br/>
+                    It's quick, easy, takes 2 minutes and it's a must!
+                </p>
+            </div>
         </div>
     </section>
     <section class="row jk-row">
-        <div class="col-xs-8 jk-main-tiles" style="background-color: pink;">&nbsp;</div>
-        <div class="col-xs-4 jk-main-tiles" style="background-color: lightblue;">
+        <div class="col-sm-8 clearfix jk-main-tiles jk-no-padding" style="background-color: lightblue;">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="/images/screen1.png" class="img-responsive jk-max-hight" alt="LMS screenshots">
+                        <div class="carousel-caption ">
+                            Set your goals
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/screen2.png" class="img-responsive jk-max-hight" alt="LMS screenshots">
+                        <div class="carousel-caption">
+                            Decomposr goals to tasks
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/screen3.png" class="img-responsive jk-max-hight" alt="LMS screenshots">
+                        <div class="carousel-caption">
+                            Check goals every day
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/screen4.png" class="img-responsive jk-max-hight" alt="LMS screenshots">
+                        <div class="carousel-caption">
+                            Control your life
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4 jk-main-tiles clearfix" style="background-color:pink ;">
             <table class="jk-full-area">
                 <tr>
                     <td class="jk-font-medium">
-
                         <img src="https://hacksummit.s3.amazonaws.com/img/logo.svg" alt="hack.summit()" height="26" width="212">
                         <br/><a href="https://www.koding.com/Hackathon">For Koding Virtual Hackathon</a>
                     </td>
@@ -72,3 +125,14 @@
     </section>
 
 </article>
+
+@section scripts
+{
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    </script>
+    
+}

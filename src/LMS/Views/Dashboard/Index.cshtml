@@ -34,13 +34,13 @@
 <article ng-app="dashboardApp" ng-cloak ng-controller="dashboardCtrl as dsb">
     <div class="well row">
         <h4 class="jk-inline-block"> Check goals which you had been doing today.</h4>
-        <button class="btn btn-default jk-right" ng-click="dsb.refresh()"><i class="fa fa-refresh"></i></button>
+        <button class="btn btn-default jk-right" ng-click="dsb.refresh(dsb.loadAll)"><i class="fa fa-refresh"></i></button>
     </div>
     <div class="list-group-item row">
 
         <div class="col-xs-12" ng-repeat="item in dsb.goals">
             <div class="panel panel-default ">
-                <div class="panel-heading jk-a-label" style="opacity:0.5;background-color:{{item.Color}}; ">{{item.Title}}</div>
+                <div class="panel-heading jk-a-label jk-opacity" style="background-color:{{item.Color}}; ">{{item.Title}}</div>
                 <div class="panel-body list-group row">
                     <div class="list-group-item" ng-repeat="goal in item.Goals">
                         <div class="col-xs-1">
@@ -54,7 +54,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="list-group-item col-xs-12">
-                        <div class="jk-right"><button class="btn btn-default" title="load all goals" ng-click="dsb.showAll(dsb.loadAll)"><i class="fa" ng-class="{'fa-arrow-down':!dsb.loadAll,'fa-arrow-up':dsb.loadAll }"></i></button>
+                        <div class="jk-right"><button class="btn btn-default" title="load all goals" ng-click="dsb.showAll(!dsb.loadAll)"><i class="fa" ng-class="{'fa-arrow-down':!dsb.loadAll,'fa-arrow-up':dsb.loadAll }"></i></button>
                         </div>
                     </div>
                 </div>
