@@ -16,9 +16,10 @@
     dashboard: {
         page: "/Dashboard",
         list: "/api/areas/?IncludeGoals=true", //GET
-        add: "/goals/",  // POST
+        listAll: "/api/areas/?IncludeGoals=true&onlyLastGoals=false", //GET
+        add: "/api/goals/",  // POST
         edit: "/api/goals/", // PUT
-        del: "/calendartasks/" //DELETE
+        del: "/api/calendartasks/" //DELETE
     }
 }
 

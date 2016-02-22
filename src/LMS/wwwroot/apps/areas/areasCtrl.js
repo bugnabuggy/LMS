@@ -76,7 +76,7 @@
             }
             newArea.Color = ctrl.generateColor();
             ctrl.add(newArea);
-            ctrl.list();
+            ctrl.refresh();
    
         }
 
@@ -98,7 +98,7 @@
         };
 
         ctrl.delArea = function(area) {
-            areasSrv.del(area);
+            ctrl.del(area);
         };
 
         ctrl.key = function (area, key) {
