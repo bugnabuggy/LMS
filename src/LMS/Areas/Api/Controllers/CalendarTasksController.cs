@@ -24,7 +24,7 @@ namespace LMS.Areas.Api.Controllers
         }
 
         [HttpDelete("calendartasks/{id}")]
-        public string Post(string id)
+        public string Delete(string id)
         {
             _calendarTasksService.Delete(id);
             return id;
