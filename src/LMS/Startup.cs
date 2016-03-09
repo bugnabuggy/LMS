@@ -42,15 +42,16 @@ namespace LMS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var path = PlatformServices.Default.Application.ApplicationBasePath;
-            services.AddEntityFramework()
-                .AddSqlite()
-                .AddDbContext<ModelContext>(opt => opt.UseSqlite("Filename=" + Path.Combine(path, "site.db")));
-            // Add framework services.
+            //var path = PlatformServices.Default.Application.ApplicationBasePath;
             //services.AddEntityFramework()
-            //    .AddSqlServer()
-            //    .AddDbContext<ApplicationDbContext>(options =>
-            //        options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            //    .AddSqlite()
+            //    .AddDbContext<ModelContext>(opt => opt.UseSqlite("Filename=" + Path.Combine(path, "site.db")));
+
+            // Add framework services.
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<ModelContext>(options =>
+                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ModelContext>()
@@ -118,7 +119,7 @@ namespace LMS
                 catch { }
             }
 
-            //app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+            app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
             app.UseStaticFiles();
 

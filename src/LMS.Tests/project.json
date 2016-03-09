@@ -6,7 +6,7 @@
     "projectUrl": "",
     "licenseUrl": "",
     "frameworks": {
-        "dnxcore50": { }
+        "dnx451": { }
     },
     "dependencies": {
         "LMS": "1.0.0-*",

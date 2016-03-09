@@ -17,7 +17,6 @@ namespace LMS.Core.Models
         public DateTime Timestamp { get; set; }
 
         [Required]
-        [StringLength(ModelConstrains.IdLength)]
         public string UserId { get; set; }
 
         public User User { get; set; }

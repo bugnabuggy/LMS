@@ -213,5 +213,5 @@ ModelManifest.xml
 
 src/LMS/wwwroot/lib/*
 src/LMS/site.db
-src/LMS/_references.js
+*/_references.js
 

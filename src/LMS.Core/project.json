@@ -6,7 +6,11 @@
     "projectUrl": "",
     "licenseUrl": "",
     "frameworks": {
-        "dnxcore50": { }
+      "dnx451": {
+        "frameworkAssemblies": {
+          "System.ComponentModel.DataAnnotations": "4.0.0.0"
+        }
+      }
     },
     "dependencies": {
         "System.ComponentModel.Annotations": "4.0.11-beta-23516",
